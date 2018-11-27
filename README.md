@@ -1,7 +1,7 @@
 
 Original: https://github.com/duanhongyi/gmssl
 
-Now includes sm9
+Now include sm9
 
 GMSSL
 ========
