@@ -1,6 +1,11 @@
+
+Original: https://github.com/duanhongyi/gmssl
+
+Now includes sm9
+
 GMSSL
 ========
-GmSSL是一个开源的加密包的python实现，支持SM2/SM3/SM4等国密(国家商用密码)算法、项目采用对商业应用友好的类BSD开源许可证，开源且可以用于闭源的商业应用。
+GmSSL是一个开源的加密包的python实现，支持SM2/SM3/SM4/SM9等国密(国家商用密码)算法、项目采用对商业应用友好的类BSD开源许可证，开源且可以用于闭源的商业应用。
 
 ### 安装
 
@@ -85,5 +90,52 @@ encrypt_value = crypt_sm4.crypt_cbc(iv , value) #  bytes类型
 crypt_sm4.set_key(key, SM4_DECRYPT)
 decrypt_value = crypt_sm4.crypt_cbc(iv , encrypt_value) #  bytes类型
 assert value == decrypt_value
+
+```
+
+### SM9算法
+
+#### 1. `sign`和`verify`
+
+```python
+
+idA = 'A'
+idB = 'B'
+master_public, master_secret = sm9.setup ('sign')
+Da = sm9.private_key_extract ('sign', master_public, master_secret, idA)
+message = 'abc'
+signature = sm9.sign (master_public, Da, message)
+assert (sm9.verify (master_public, idA, message, signature))
+
+```
+
+#### 2. `key agreement`
+
+```python
+
+idA = 'A'
+idB = 'B'
+master_public, master_secret = sm9.setup ('keyagreement')
+Da = sm9.private_key_extract ('keyagreement', master_public, master_secret, idA)
+Db = sm9.private_key_extract ('keyagreement', master_public, master_secret, idB)
+xa, Ra = sm9.generate_ephemeral (master_public, idB)
+xb, Rb = sm9.generate_ephemeral (master_public, idA)
+ska = sm9.generate_session_key (idA, idB, Ra, Rb, Da, xa, master_public, 'A', 128)
+skb = sm9.generate_session_key (idA, idB, Ra, Rb, Db, xb, master_public, 'B', 128)
+assert (ska == skb)
+
+```
+
+#### 3. `encrypt`和`decrypt`
+
+```python
+
+idA = 'A'
+master_public, master_secret = sm9.setup ('encrypt')
+Da = sm9.private_key_extract ('encrypt', master_public, master_secret, idA)
+message = 'abc'
+ct = sm9.kem_dem_enc (master_public, idA, message, 32)
+pt = sm9.kem_dem_dec (master_public, idA, Da, ct, 32)
+assert (message == pt)
 
 ```
