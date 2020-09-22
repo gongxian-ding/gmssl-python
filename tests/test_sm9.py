@@ -17,6 +17,8 @@ if __name__ == '__main__':
 
     assert (sm9.verify (master_public, idA, message, signature))
 
+    print ("\t\t\t success")
+
     print ("-----------------test key agreement---------------")
     
     master_public, master_secret = sm9.setup ('keyagreement')
@@ -32,6 +34,8 @@ if __name__ == '__main__':
 
     assert (ska == skb)
 
+    print ("\t\t\t success")
+    
     print ("-----------------test encrypt and decrypt---------------")
 
     master_public, master_secret = sm9.setup ('encrypt')
@@ -43,3 +47,5 @@ if __name__ == '__main__':
     pt = sm9.kem_dem_dec (master_public, idA, Da, ct, 32)
 
     assert (message == pt)
+
+    print ("\t\t\t success")

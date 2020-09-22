@@ -1,13 +1,13 @@
 
 import binascii
 from math import ceil, floor, log
-from sm3 import sm3_kdf, sm3_hash
+from gmssl.sm3 import sm3_kdf, sm3_hash
 
 from random import SystemRandom
 
-import optimized_field_elements as fq
-import optimized_curve as ec
-import optimized_pairing as ate
+import gmssl.optimized_field_elements as fq
+import gmssl.optimized_curve as ec
+import gmssl.optimized_pairing as ate
 
 FAILURE = False
 SUCCESS = True
