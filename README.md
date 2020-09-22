@@ -3,8 +3,12 @@ Original: https://github.com/duanhongyi/gmssl
 
 Now include sm9.
 
-Setup and Test
-================
+GMSSL
+========
+GmSSL是一个开源的加密包的python实现，支持SM2/SM3/SM4/SM9等国密(国家商用密码)算法、项目采用对商业应用友好的类BSD开源许可证，开源且可以用于闭源的商业应用。
+
+###Setup and Test
+
 ```
 export PYTHONPATH=/path/to/gmssl:$PYTHONPATH
 ```
@@ -19,10 +23,6 @@ python3 tests/test_sm9.py
 ```
 
 Replace tests with the path into the tests directory.
-
-GMSSL
-========
-GmSSL是一个开源的加密包的python实现，支持SM2/SM3/SM4/SM9等国密(国家商用密码)算法、项目采用对商业应用友好的类BSD开源许可证，开源且可以用于闭源的商业应用。
 
 ### SM2算法
 RSA算法的危机在于其存在亚指数算法，对ECC算法而言一般没有亚指数攻击算法
@@ -149,4 +149,4 @@ ct = sm9.kem_dem_enc (master_public, idA, message, 32)
 pt = sm9.kem_dem_dec (master_public, idA, Da, ct, 32)
 assert (message == pt)
 
-```
+
